@@ -4,7 +4,10 @@
    ═══════════════════════════════════════════════ */
 
 /* ── TETR.IO API ── */
-const TETR_API   = 'https://ch.tetr.io/api';
+// Прямой запрос на ch.tetr.io блокируется CORS когда сайт
+// хостится не на tetr.io. Используем публичный прокси corsproxy.io
+// который добавляет заголовок Access-Control-Allow-Origin: *
+const TETR_API   = 'https://corsproxy.io/?url=https://ch.tetr.io/api';
 const SESSION_ID = crypto.randomUUID(); // X-Session-ID для кэш-консистентности
 
 /**
