@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>КиберРезультаты — Главная</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-[#d9d9d9] text-gray-900 font-sans text-[15px]">
+
+  <!-- НАВИГАЦИЯ -->
+  <nav class="bg-[#5b7db1] flex items-stretch h-[52px] sticky top-0 z-50">
+    <a href="index.html"       class="nav-link active">Главная</a>
+    <a href="tournaments.html" class="nav-link">Турниры</a>
+    <a href="stats.html"       class="nav-link">Статистика</a>
+  </nav>
+
+  <!-- ГЛАВНАЯ -->
+  <main class="min-h-[calc(100vh-52px)] px-20 py-12">
+    <div class="grid grid-cols-[1fr_420px] gap-16 items-start">
+
+      <!-- Левая колонка -->
+      <div>
+        <div class="mb-10">
+          <p class="text-base text-gray-900 mb-3">Обо мне:</p>
+          <div class="text-sm text-gray-700 leading-relaxed max-w-lg space-y-1">
+            <p>Меня зовут Нарыжный Роман и я выступаю под псевдонимом <strong>sweader</strong></p>
+            <p>Уже как несколько лет я соревнуюсь в разных версиях дисцпилины "Тетрис". Моей основной игрой является <strong>TETR.IO</strong>
+            но я также занимал солидные места в Tetris Effect: Connected и TetVis-III</p>
+              <p>За свою карьеру я заработал 1-й спортивный разряд в Санкт-Петербурге</p>
+              <p>filler</p>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-base text-gray-900 mb-3">Контактная информация:</p>
+          <div class="contacts-list flex flex-col gap-2 mt-2">
+            <a href="https://ch.tetr.io/u/sweader"
+               class="text-sm text-gray-700 no-underline flex items-center gap-2 hover:text-[#5b7db1] hover:underline">
+              TETR.IO: ch.tetr.io/u/sweader
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Правая колонка — фото -->
+      <div>
+        <div class="w-full bg-white border border-gray-300 flex flex-col items-center justify-center gap-2 text-gray-400 text-base"
+             style="aspect-ratio:3/4; max-width:420px;">
+          <span class="text-4xl opacity-40">🖼</span>
+          <span>Фото</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

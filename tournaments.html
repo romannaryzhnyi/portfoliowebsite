@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>КиберРезультаты — Турниры</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-[#d9d9d9] text-gray-900 font-sans text-[15px]">
+
+  <!-- НАВИГАЦИЯ -->
+  <nav class="bg-[#5b7db1] flex items-stretch h-[52px] sticky top-0 z-50">
+    <a href="index.html"       class="nav-link">Главная</a>
+    <a href="tournaments.html" class="nav-link active">Турниры</a>
+    <a href="stats.html"       class="nav-link">Статистика</a>
+  </nav>
+
+  <main class="px-20 py-10">
+
+    <!-- ── ПАНЕЛЬ ФИЛЬТРОВ ── -->
+    <div class="bg-white border border-gray-300 rounded p-5 mb-8 flex flex-wrap items-end gap-8">
+
+      <!-- Слайдер года -->
+      <div class="flex flex-col gap-2 min-w-[260px]">
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-700 font-medium">Год:</span>
+          <span id="year-value" class="text-sm font-semibold text-[#5b7db1]">2024 — 2026</span>
+        </div>
+        <div class="relative h-6 flex items-center">
+          <!-- track -->
+          <div class="absolute w-full h-[3px] bg-gray-300 rounded"></div>
+          <!-- highlight между ручками -->
+          <div id="range-track" class="absolute h-[3px] bg-[#5b7db1] rounded pointer-events-none"></div>
+          <!-- левая ручка -->
+          <input id="year-from" type="range" min="2024" max="2026" step="1" value="2024"
+                 class="range-thumb absolute w-full appearance-none bg-transparent pointer-events-none" />
+          <!-- правая ручка -->
+          <input id="year-to"   type="range" min="2024" max="2026" step="1" value="2026"
+                 class="range-thumb absolute w-full appearance-none bg-transparent pointer-events-none" />
+        </div>
+        <div class="flex justify-between text-[11px] text-gray-400">
+          <span>2024</span><span>2025</span><span>2026</span>
+        </div>
+      </div>
+
+      <!-- Фильтр по типу -->
+      <div class="flex flex-col gap-2">
+        <span class="text-sm text-gray-700 font-medium">Тип соревнований:</span>
+        <div class="flex flex-wrap gap-2">
+          <button class="filter-type-btn active-filter text-xs px-3 py-1.5 rounded border transition-colors" data-type="all">
+            Все
+          </button>
+          <button class="filter-type-btn text-xs px-3 py-1.5 rounded border transition-colors" data-type="regional">
+            Региональные
+          </button>
+          <button class="filter-type-btn text-xs px-3 py-1.5 rounded border transition-colors" data-type="national">
+            Всероссийские
+          </button>
+          <button class="filter-type-btn text-xs px-3 py-1.5 rounded border transition-colors" data-type="international">
+            Международные
+          </button>
+        </div>
+      </div>
+
+      <!-- Счётчик результатов -->
+      <div class="ml-auto self-center">
+        <span id="filter-count" class="text-sm text-gray-400"></span>
+      </div>
+    </div>
+
+    <!-- ── СПИСОК ТУРНИРОВ ── -->
+    <div id="tournament-list">
+
+      <!-- Турнир 1 -->
+      <div class="tournament-entry mb-10" data-year="2025" data-type="international">
+        <p class="text-[17px] font-semibold text-center text-gray-900 mb-4">Турнир 1</p>
+        <div class="grid grid-cols-[1fr_200px_200px] gap-6 items-start pl-4 border-l-[3px] border-gray-400">
+          <div>
+            <p class="text-sm text-gray-900 mb-1">Описание турнира:</p>
+            <p class="text-[13px] text-gray-600 leading-relaxed">
+              Название турнира. Город/Формат проведения.<br>
+              Место: — . Участников: —. Формат: —.
+            </p>
+            <p class="text-sm text-gray-900 mt-3 mb-1">Ссылки на организаторов/страницу турнира:</p>
+            <a href="https://ctwc.gg" class="text-[13px] text-[#5b7db1] hover:underline">filler</a>
+          </div>
+          <div class="media-box"><span class="text-[15px] text-gray-500">фото</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
+          <div class="media-box"><span class="text-[15px] text-gray-500">видео</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
+        </div>
+        <div class="w-full h-px bg-gray-300 mt-8"></div>
+      </div>
+
+      <!-- Турнир 2 -->
+      <div class="tournament-entry mb-10" data-year="2025" data-type="national">
+        <p class="text-[17px] font-semibold text-center text-gray-900 mb-4">Турнир 2</p>
+        <div class="grid grid-cols-[1fr_200px_200px] gap-6 items-start pl-4 border-l-[3px] border-gray-400">
+          <div>
+            <p class="text-sm text-gray-900 mb-1">Описание турнира:</p>
+            <p class="text-[13px] text-gray-600 leading-relaxed">
+              Название турнира. Город/Формат проведения.<br>
+              Место: — . Участников: —. Формат: —.
+            </p>
+            <p class="text-sm text-gray-900 mt-3 mb-1">Ссылки на организаторов/страницу турнира:</p>
+            <a href="#" class="text-[13px] text-[#5b7db1] hover:underline">filler</a>
+          </div>
+          <div class="media-box"><span class="text-[15px] text-gray-500">фото</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
+          <div class="media-box"><span class="text-[15px] text-gray-500">видео</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
+        </div>
+        <div class="w-full h-px bg-gray-300 mt-8"></div>
+      </div>
+
+      <!-- Турнир 3 -->
+      <div class="tournament-entry mb-10" data-year="2025" data-type="international">
+        <p class="text-[17px] font-semibold text-center text-gray-900 mb-4">Турнир 3</p>
+        <div class="grid grid-cols-[1fr_200px_200px] gap-6 items-start pl-4 border-l-[3px] border-gray-400">
+          <div>
+            <p class="text-sm text-gray-900 mb-1">Описание турнира:</p>
+            <p class="text-[13px] text-gray-600 leading-relaxed">
+              Название турнира. Город/Формат проведения.<br>
+              Место: — . Участников: —. Формат: —.
+            </p>
+            <p class="text-sm text-gray-900 mt-3 mb-1">Ссылки на организаторов/страницу турнира:</p>
+            <a href="#" class="text-[13px] text-[#5b7db1] hover:underline">filler</a>
+          </div>
+          <div class="media-box"><span class="text-[15px] text-gray-500">фото</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
+          <div class="media-box"><span class="text-[15px] text-gray-500">видео</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
+        </div>
+        <div class="w-full h-px bg-gray-300 mt-8"></div>
+      </div>
+
+      <!-- Турнир 4 -->
+      <div class="tournament-entry mb-10" data-year="2024" data-type="regional">
+        <p class="text-[17px] font-semibold text-center text-gray-900 mb-4">Турнир 4</p>
+        <div class="grid grid-cols-[1fr_200px_200px] gap-6 items-start pl-4 border-l-[3px] border-gray-400">
+          <div>
+            <p class="text-sm text-gray-900 mb-1">Описание турнира:</p>
+            <p class="text-[13px] text-gray-600 leading-relaxed">
+              Название турнира. Город/Формат проведения.<br>
+              Место: — . Участников: —. Формат: —.
+            </p>
+            <p class="text-sm text-gray-900 mt-3 mb-1">Ссылки на организаторов/страницу турнира:</p>
+            <span class="text-[13px] text-gray-400 italic">ссылка при наличии</span>
+          </div>
+          <div class="media-box"><span class="text-[15px] text-gray-500">фото</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
+          <div class="media-box"><span class="text-[15px] text-gray-500">видео</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
+        </div>
+        <div class="w-full h-px bg-gray-300 mt-8"></div>
+      </div>
+
+      <!-- Турнир 5 -->
+      <div class="tournament-entry mb-10" data-year="2024" data-type="regional">
+        <p class="text-[17px] font-semibold text-center text-gray-900 mb-4">Турнир 5</p>
+        <div class="grid grid-cols-[1fr_200px_200px] gap-6 items-start pl-4 border-l-[3px] border-gray-400">
+          <div>
+            <p class="text-sm text-gray-900 mb-1">Описание турнира:</p>
+            <p class="text-[13px] text-gray-600 leading-relaxed">
+              Название турнира. Город/Формат проведения.<br>
+              Место: — . Участников: —. Формат: —.
+            </p>
+            <p class="text-sm text-gray-900 mt-3 mb-1">Ссылки на организаторов/страницу турнира:</p>
+            <span class="text-[13px] text-gray-400 italic">ссылка при наличии</span>
+          </div>
+          <div class="media-box"><span class="text-[15px] text-gray-500">фото</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
+          <div class="media-box"><span class="text-[15px] text-gray-500">видео</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
+        </div>
+        <div class="w-full h-px bg-gray-300 mt-8"></div>
+      </div>
+
+      <!-- Турнир 6 -->
+      <div class="tournament-entry mb-10" data-year="2024" data-type="national">
+        <p class="text-[17px] font-semibold text-center text-gray-900 mb-4">Турнир 6</p>
+        <div class="grid grid-cols-[1fr_200px_200px] gap-6 items-start pl-4 border-l-[3px] border-gray-400">
+          <div>
+            <p class="text-sm text-gray-900 mb-1">Описание турнира:</p>
+            <p class="text-[13px] text-gray-600 leading-relaxed">
+              Название турнира. Город/Формат проведения.<br>
+              Место: — . Участников: —. Формат: —.
+            </p>
+            <p class="text-sm text-gray-900 mt-3 mb-1">Ссылки на организаторов/страницу турнира:</p>
+            <span class="text-[13px] text-gray-400 italic">ссылка при наличии</span>
+          </div>
+          <div class="media-box"><span class="text-[15px] text-gray-500">фото</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
+          <div class="media-box"><span class="text-[15px] text-gray-500">видео</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
+        </div>
+        <div class="w-full h-px bg-gray-300 mt-8"></div>
+      </div>
+
+      <!-- Турнир 7 -->
+      <div class="tournament-entry mb-10" data-year="2026" data-type="international">
+        <p class="text-[17px] font-semibold text-center text-gray-900 mb-4">Турнир 7</p>
+        <div class="grid grid-cols-[1fr_200px_200px] gap-6 items-start pl-4 border-l-[3px] border-gray-400">
+          <div>
+            <p class="text-sm text-gray-900 mb-1">Описание турнира:</p>
+            <p class="text-[13px] text-gray-600 leading-relaxed">
+              Название турнира. Город/Формат проведения.<br>
+              Место: — . Участников: —. Формат: —.
+            </p>
+            <p class="text-sm text-gray-900 mt-3 mb-1">Ссылки на организаторов/страницу турнира:</p>
+            <span class="text-[13px] text-gray-400 italic">ссылка при наличии</span>
+          </div>
+          <div class="media-box"><span class="text-[15px] text-gray-500">фото</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
+          <div class="media-box"><span class="text-[15px] text-gray-500">видео</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
+        </div>
+        <div class="w-full h-px bg-gray-300 mt-8"></div>
+      </div>
+
+      <!-- Турнир 8 -->
+      <div class="tournament-entry mb-10" data-year="2026" data-type="regional">
+        <p class="text-[17px] font-semibold text-center text-gray-900 mb-4">Турнир 8</p>
+        <div class="grid grid-cols-[1fr_200px_200px] gap-6 items-start pl-4 border-l-[3px] border-gray-400">
+          <div>
+            <p class="text-sm text-gray-900 mb-1">Описание турнира:</p>
+            <p class="text-[13px] text-gray-600 leading-relaxed">
+              Название турнира. Город/Формат проведения.<br>
+              Место: — . Участников: —. Формат: —.
+            </p>
+            <p class="text-sm text-gray-900 mt-3 mb-1">Ссылки на организаторов/страницу турнира:</p>
+            <span class="text-[13px] text-gray-400 italic">ссылка при наличии</span>
+          </div>
+          <div class="media-box"><span class="text-[15px] text-gray-500">фото</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
+          <div class="media-box"><span class="text-[15px] text-gray-500">видео</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
+        </div>
+      </div>
+
+    </div><!-- /tournament-list -->
+
+    <!-- Пусто после фильтрации -->
+    <div id="no-results" class="hidden text-center text-gray-400 text-sm py-16 border border-dashed border-gray-300 rounded">
+      Нет турниров, соответствующих выбранным фильтрам.
+    </div>
+
+  </main>
+
+  <style>
+    /* Ручки слайдера */
+    .range-thumb::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: #5b7db1;
+      border: 2px solid #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      pointer-events: all;
+      cursor: pointer;
+    }
+    .range-thumb::-moz-range-thumb {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: #5b7db1;
+      border: 2px solid #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      pointer-events: all;
+      cursor: pointer;
+    }
+    /* Активная кнопка типа */
+    .filter-type-btn { background: #fff; color: #4b5563; border-color: #d1d5db; }
+    .filter-type-btn.active-filter { background: #5b7db1; color: #fff; border-color: #5b7db1; }
+  </style>
+
+  <script>
+    const MIN_YEAR = 2024, MAX_YEAR = 2026;
+    const fromSlider = document.getElementById('year-from');
+    const toSlider   = document.getElementById('year-to');
+    const yearValue  = document.getElementById('year-value');
+    const rangeTrack = document.getElementById('range-track');
+
+    let activeType = 'all';
+
+    /* Обновить подсветку трека между ручками */
+    function updateTrack() {
+      const from = parseInt(fromSlider.value);
+      const to   = parseInt(toSlider.value);
+      const total = MAX_YEAR - MIN_YEAR;
+      const leftPct  = ((from - MIN_YEAR) / total) * 100;
+      const rightPct = ((to   - MIN_YEAR) / total) * 100;
+      rangeTrack.style.left  = leftPct  + '%';
+      rangeTrack.style.width = (rightPct - leftPct) + '%';
+      yearValue.textContent  = from === to ? `${from}` : `${from} — ${to}`;
+    }
+
+    /* Не позволять ручкам перескакивать друг через друга */
+    fromSlider.addEventListener('input', () => {
+      if (parseInt(fromSlider.value) > parseInt(toSlider.value))
+        fromSlider.value = toSlider.value;
+      updateTrack();
+      applyFilters();
+    });
+    toSlider.addEventListener('input', () => {
+      if (parseInt(toSlider.value) < parseInt(fromSlider.value))
+        toSlider.value = fromSlider.value;
+      updateTrack();
+      applyFilters();
+    });
+
+    /* Кнопки типа */
+    document.querySelectorAll('.filter-type-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-type-btn').forEach(b => b.classList.remove('active-filter'));
+        btn.classList.add('active-filter');
+        activeType = btn.dataset.type;
+        applyFilters();
+      });
+    });
+
+    /* Применить фильтры */
+    function applyFilters() {
+      const from = parseInt(fromSlider.value);
+      const to   = parseInt(toSlider.value);
+      const entries = document.querySelectorAll('.tournament-entry');
+      let visible = 0;
+
+      entries.forEach(entry => { 
+        const yearOk = year >= from && year <= to;
+        const typeOk = activeType === 'all' || type === activeType;
+
+        if (yearOk && typeOk) {
+          entry.style.display = '';
+          visible++;
+        } else {
+          entry.style.display = 'none';
+        }
+      });
+
+      document.getElementById('filter-count').textContent =
+        `Показано: ${visible} из ${entries.length}`;
+      document.getElementById('no-results').classList.toggle('hidden', visible > 0);
+    }
+
+    /* Инициализация */
+    updateTrack();
+    applyFilters();
+  </script>
+
+  <script src="main.js"></script>
+</body>
+</html>
