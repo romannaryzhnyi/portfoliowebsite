@@ -4,19 +4,19 @@
    ═══════════════════════════════════════════════ */
 
 /* ── TETR.IO API ── */
-// Прямой запрос на ch.tetr.io блокируется CORS когда сайт
-// хостится не на tetr.io. Используем публичный прокси corsproxy.io
-// который добавляет заголовок Access-Control-Allow-Origin: *
-const TETR_API   = 'https://corsproxy.io/?url=https://ch.tetr.io/api';
+// Укажите адрес вашего CORS-прокси на VPS.
+// После установки proxy.js замените на: 'http://ВАШ_IP:3000/api'
+// Если настроили Nginx + SSL:          'https://proxy.ваш-домен.ru/api'
+const TETR_BASE  = 'http://94.241.174.25:3000/api';
 const SESSION_ID = crypto.randomUUID(); // X-Session-ID для кэш-консистентности
 
 /**
- * Выполнить запрос к TETR.IO API.
+ * Выполнить запрос к TETR.IO API через свой CORS-прокси.
  * @param {string} path  Путь, например /users/sweader
  * @returns {Promise<object>}
  */
 function apiFetch(path) {
-  return fetch(TETR_API + path, {
+  return fetch(TETR_BASE + path, {
     headers: { 'X-Session-ID': SESSION_ID }
   }).then(r => r.json());
 }
