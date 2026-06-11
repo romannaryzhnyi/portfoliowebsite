@@ -7,7 +7,7 @@
 // Укажите адрес вашего CORS-прокси на VPS.
 // После установки proxy.js замените на: 'http://ВАШ_IP:3000/api'
 // Если настроили Nginx + SSL:          'https://proxy.ваш-домен.ru/api'
-const TETR_BASE = 'https://3139823-sweader.twc1.net/api';
+const TETR_BASE  = 'https://julian-slip-requests-ram.trycloudflare.com/api';
 const SESSION_ID = crypto.randomUUID(); // X-Session-ID для кэш-консистентности
 
 /**
