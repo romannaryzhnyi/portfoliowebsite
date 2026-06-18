@@ -1,8 +1,3 @@
-/* ═══════════════════════════════════════
-   style.css — КиберРезультаты
-   ═══════════════════════════════════════ */
-
-/* ── Навигация ── */
 .nav-link {
   color: #fff;
   font-size: 0.95rem;
@@ -26,7 +21,6 @@
   border-radius: 2px 2px 0 0;
 }
 
-/* ── Мобильная навигация: ссылки делят ширину равными частями ── */
 @media (max-width: 640px) {
   .nav-link {
     flex: 1 1 0;
@@ -38,7 +32,6 @@
   }
 }
 
-/* ── Универсальная карточка ── */
 .card {
   background: #fff;
   border: 1px solid #e5e7eb;
@@ -48,7 +41,6 @@
 }
 .card:hover { box-shadow: 0 3px 10px rgba(0,0,0,0.10); }
 
-/* ── Псевдоэлемент «—» перед контактами ── */
 .contacts-list a::before {
   content: '—';
   color: #9ca3af;
@@ -56,7 +48,6 @@
   margin-right: 6px;
 }
 
-/* ── Миниатюра фото турнира — растягивается по высоте строки (как видео) ── */
 .media-thumb-photo {
   width: 100%;
   height: 100%;
@@ -69,7 +60,6 @@
 }
 .media-thumb-photo:hover { border-color: #5b7db1; }
 
-/* ── Миниатюра видео турнира — задаёт высоту строки, крупный формат 16:9 ── */
 .media-thumb-video {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -81,7 +71,6 @@
 }
 .media-thumb-video:hover { border-color: #5b7db1; }
 
-/* ── Ранги ── */
 .rank-x {
   background: radial-gradient(circle at 40% 40%, #ff6ef7, #c100b0, #6b006b);
   box-shadow: 0 0 14px rgba(193,0,176,0.35);
@@ -91,7 +80,6 @@
   box-shadow: 0 0 14px rgba(80,144,224,0.35);
 }
 
-/* ── Слайдер ── */
 .range-thumb::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 16px; height: 16px;
@@ -116,7 +104,6 @@
   cursor: pointer;
 }
 
-/* ── Кнопки фильтра турниров ── */
 .filter-type-btn {
   background: #fff;
   color: #4b5563;
@@ -127,11 +114,10 @@
 .filter-type-btn:active { transform: scale(0.96); }
 .filter-type-btn.active-filter { background: #5b7db1; color: #fff; border-color: #5b7db1; }
 
-/* ── Секция статистики — плавный hover ── */
 .stat-section { transition: box-shadow 0.2s, transform 0.2s; }
 .stat-section:hover { box-shadow: 0 4px 14px rgba(91,125,177,0.14); transform: translateY(-1px); }
 
-/* ── Карточка турнира ── */
+
 .tournament-entry { transition: opacity 0.25s, transform 0.25s; }
 .tournament-entry.hiding { opacity: 0; transform: translateY(-6px); }
 .tournament-card-inner {
@@ -141,7 +127,7 @@
 }
 .tournament-entry:hover .tournament-card-inner { background: rgba(91,125,177,0.04); }
 
-/* ── Анимации ── */
+
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -154,7 +140,6 @@
 }
 .fade-in { animation: fadeIn 0.35s ease both; }
 
-/* ── Кнопка загрузки во время запроса ── */
 @keyframes pulse-btn {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.55; }
