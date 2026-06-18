@@ -1,8 +1,3 @@
-/* ═══════════════════════════════════════════════
-   main.js — КиберРезультаты / sweader portfolio
-   ═══════════════════════════════════════════════ */
-
-/* ── TETR.IO API ── */
 const TETR_BASE  = 'https://corsproxy.io/?url=https://ch.tetr.io/api';
 const SESSION_ID = (typeof crypto !== 'undefined' && crypto.randomUUID)
   ? crypto.randomUUID()
@@ -17,7 +12,6 @@ function apiFetch(path) {
   }).then(r => r.json());
 }
 
-/* ── Форматирование ── */
 function fmtTime(ms) {
   if (ms == null) return '—';
   const s = ms / 1000;
@@ -31,7 +25,6 @@ function fmtNum(n, dec = 0) {
   return Number(n).toLocaleString('ru-RU', { maximumFractionDigits: dec });
 }
 
-/* ── Цвета рангов TETR.IO ── */
 const RANK_COLORS = {
   d: '#907591', dp: '#724e60',
   c: '#ce6c51', cp: '#b54c33',
@@ -49,7 +42,6 @@ function rankColor(rank) {
   return RANK_COLORS[rank.toLowerCase()] ?? '#9b9b9b';
 }
 
-/* ── Подстатистика с цветной полосой ── */
 function subStat(label, value, color) {
   return `<div class="flex items-center gap-2 text-[12px] text-gray-600">
     <span class="w-5 h-[3px] rounded flex-shrink-0" style="background:${color}"></span>
@@ -58,13 +50,11 @@ function subStat(label, value, color) {
   </div>`;
 }
 
-/* ── Нормализация 0–100 ── */
 function norm(val, min, max) {
   if (val == null) return 0;
   return Math.min(100, Math.max(0, ((val - min) / (max - min)) * 100));
 }
 
-/* ── Радар-чарты ── */
 const _charts = {};
 
 function buildRadar(id, labels, data, color = '#5b7db1', dark = false, rawData = null) {
@@ -125,17 +115,9 @@ function buildRadar(id, labels, data, color = '#5b7db1', dark = false, rawData =
   });
 }
 
-/* ══════════════════════════════════════
-   ВАЛИДАЦИЯ НИКНЕЙМА
-   3–16 символов, латиница, цифры, тире, нижнее подчёркивание
-   ══════════════════════════════════════ */
 const USERNAME_PATTERN = /^[a-zA-Z0-9_-]{3,16}$/;
 
-/**
- * Проверить никнейм и показать/скрыть сообщение об ошибке под полем.
- * @param {string} value
- * @returns {boolean} true если значение валидно
- */
+
 function validateUsername(value) {
   const errorEl = document.getElementById('username-validation-error');
   const inputEl = document.getElementById('username-input');
@@ -167,9 +149,7 @@ function validateUsername(value) {
   return isValid;
 }
 
-/* ══════════════════════════════════════
-   ЗАГРУЗКА СТАТИСТИКИ
-   ══════════════════════════════════════ */
+
 async function loadStats() {
   const input = document.getElementById('username-input');
   if (!input) return;
@@ -201,7 +181,6 @@ async function loadStats() {
     const user = userResp.data;
     const summ = summResp.data;
 
-    /* ── Профиль ── */
     const avatarUrl = user.avatar_revision
       ? `https://tetr.io/user-content/avatars/${user._id}.jpg?rv=${user.avatar_revision}`
       : 'https://tetr.io/res/avatar.png';
@@ -227,8 +206,7 @@ async function loadStats() {
       tl.pps != null ? subStat('PPS', fmtNum(tl.pps, 2), '#c0392b') : '',
       tl.vs  != null ? subStat('VS',  fmtNum(tl.vs,  1), '#7b61ff') : ''
     ].join('');
-
-    /* ── Sprint ── */
+     
     const sprint     = summ['40l'];
     const sprintTime = sprint?.record?.results?.stats?.finaltime;
     const spStats    = sprint?.record?.results?.stats || {};
@@ -243,21 +221,18 @@ async function loadStats() {
       spStats.pieces != null ? subStat('Pieces', fmtNum(spStats.pieces),    '#5b7db1') : ''
     ].join('');
 
-    /* ── Blitz ── */
     const blitz      = summ.blitz;
     const blitzScore = blitz?.record?.results?.stats?.score;
     document.getElementById('blitz-score').textContent = blitzScore ? fmtNum(blitzScore) : '—';
     document.getElementById('blitz-rank').textContent  =
       blitz?.rank > 0 ? `Глобальный рейтинг: #${blitz.rank}` : 'Нет рейтинговой записи';
 
-    /* ── Кэш ── */
     const cachedUntil = userResp.cache?.cached_until;
     if (cachedUntil) {
       document.getElementById('cache-info').textContent =
         `Кэш до: ${new Date(cachedUntil).toLocaleTimeString('ru-RU')} · TETR.IO API`;
     }
 
-    /* ── Производные метрики ── */
     const apm = tl.apm || 0, pps = tl.pps || 0, vs = tl.vs || 0;
     const app    = apm / (Math.max(pps, 0.0001) * 60);
     const dss    = (vs / 100) - (apm / 60);
@@ -267,7 +242,7 @@ async function loadStats() {
     const cheese = (dsp * 150) + ((vsApm - 2) * 50) + ((0.6 - app) * 125);
     const GbE    = ((app * dss) / Math.max(pps, 0.0001)) * 2;
 
-    /* ── Radar 1: Tetra League ── */
+  
     buildRadar('radar1',
       ['APM','PPS','VS','APP','DS/S','DS/P','APP+DSP','VS/APM','Cheese','GbE'],
       [
@@ -281,7 +256,6 @@ async function loadStats() {
       [apm, pps, vs, app, dss, dsp, appDsp, vsApm, cheese, GbE]
     );
 
-    /* ── Radar 2: стиль игры ── */
     const srarea   = pps * 135 + app * 290 + dsp * 700;
     const statrank = 11.2 * Math.atan((srarea - 93) / 130) + 1;
     const nmapm    = ((apm / srarea) / ((0.069 * Math.pow(1.0017, Math.pow(statrank,5)/4700)) + statrank/360)) - 1;
@@ -315,9 +289,7 @@ async function loadStats() {
   }
 }
 
-/* ══════════════════════════════════════
-   ФИЛЬТРЫ ТУРНИРОВ
-   ══════════════════════════════════════ */
+
 function initTournaments() {
   const fromSlider = document.getElementById('year-from');
   const toSlider   = document.getElementById('year-to');
@@ -336,14 +308,8 @@ function initTournaments() {
     yearValue.textContent  = from === to ? `${from}` : `${from} — ${to}`;
   }
 
-  /* Определяем по координате клика какая ручка ближе, и поднимаем её
-     z-index ДО того как браузер захватит элемент для перетаскивания.
-     Критично: слушатель ставится с capture:true на родительском контейнере,
-     чтобы сработать раньше, чем браузер начнёт drag на перекрытом input —
-     иначе при совпадении значений "нижняя" ручка остаётся недоступной
-     независимо от направления повторного клика. */
-  const sliderTrack = fromSlider.parentElement; // .relative-контейнер со слайдерами
 
+  const sliderTrack = fromSlider.parentElement; 
   function raiseClosestThumb(clientX) {
     const rect = sliderTrack.getBoundingClientRect();
     const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
@@ -359,8 +325,6 @@ function initTournaments() {
     }
   }
 
-  // capture: true — перехватываем событие на пути ВНИЗ к input, раньше,
-  // чем сам input успеет обработать pointerdown и начать drag.
   sliderTrack.addEventListener('pointerdown', e => raiseClosestThumb(e.clientX), { capture: true });
   sliderTrack.addEventListener('mousedown',   e => raiseClosestThumb(e.clientX), { capture: true });
   sliderTrack.addEventListener('touchstart',  e => raiseClosestThumb(e.touches[0].clientX), { capture: true, passive: true });
@@ -408,9 +372,6 @@ function initTournaments() {
   applyFilters();
 }
 
-/* ══════════════════════════════════════
-   ИНИЦИАЛИЗАЦИЯ
-   ══════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
   const loadBtn = document.getElementById('load-btn');
   const input   = document.getElementById('username-input');
