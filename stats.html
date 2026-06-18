@@ -6,122 +6,119 @@
   <title>КиберРезультаты — Статистика</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body class="bg-[#d9d9d9] text-gray-900 font-sans text-[15px]">
 
-  <!-- НАВИГАЦИЯ -->
-  <nav class="bg-[#5b7db1] flex items-stretch h-[52px] sticky top-0 z-50">
+  <nav class="bg-[#5b7db1] flex items-stretch h-[52px] sticky top-0 z-50 shadow-md">
     <a href="index.html"       class="nav-link">Главная</a>
     <a href="tournaments.html" class="nav-link">Турниры</a>
     <a href="stats.html"       class="nav-link active">Статистика</a>
   </nav>
 
-  <!-- СТАТИСТИКА -->
-  <main class="min-h-[calc(100vh-52px)] px-20 py-10">
+  <main class="min-h-[calc(100vh-52px)] px-4 sm:px-8 md:px-20 py-6 md:py-10">
 
-    <!-- Поиск игрока -->
-    <div class="flex items-center gap-3 mb-8">
-      <input id="username-input"
-             type="text"
-             value="sweader"
-             placeholder="Никнейм на TETR.IO (например: tetrio)"
-             class="border border-gray-400 bg-white rounded px-3 py-2 text-sm w-72 focus:outline-none focus:border-[#5b7db1]" />
-      <button id="load-btn"
-              class="bg-[#5b7db1] text-white text-sm px-5 py-2 rounded hover:bg-[#4a6a9e] transition-colors">
-        Загрузить
-      </button>
-      <span id="api-status" class="text-xs text-gray-400 ml-2"></span>
+    <!-- Строка поиска -->
+    <div class="flex flex-col gap-1 mb-6 md:mb-8 fade-in-up">
+      <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+        <input id="username-input" type="text" value="sweader"
+               placeholder="Никнейм на TETR.IO" maxlength="16"
+               class="border border-gray-300 bg-white rounded-lg px-4 py-2 text-sm w-full sm:w-64 shadow-sm
+                      focus:outline-none focus:border-[#5b7db1] focus:shadow transition-all" />
+        <div class="flex items-center gap-3">
+          <button id="load-btn"
+                  class="bg-[#5b7db1] text-white text-sm px-5 py-2 rounded-lg shadow-sm
+                         hover:bg-[#4a6a9e] active:scale-95 transition-all">
+            Загрузить
+          </button>
+          <span id="api-status" class="text-xs text-gray-400"></span>
+        </div>
+      </div>
+      <span id="username-validation-error" class="hidden text-xs text-red-400 pl-1"></span>
     </div>
 
-    <!-- Состояния загрузки / ошибки -->
-    <div id="stats-loading" class="hidden text-sm text-gray-500 mb-6">Загрузка данных с TETR.IO API…</div>
-    <div id="stats-error"   class="hidden text-sm text-red-500 mb-6"></div>
+    <div id="stats-loading" class="hidden text-sm text-gray-400 mb-6 fade-in">
+      Загрузка данных с TETR.IO API…
+    </div>
+    <div id="stats-error" class="hidden text-sm text-red-400 mb-6 fade-in"></div>
 
-    <!-- Основной контент статистики -->
-     <div id="stats-content" class="hidden">
-      <div class="grid grid-cols-2 gap-12 items-start">
+    <div id="stats-content" class="hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
 
-        <!-- Левая колонка -->
-        <div>
-          <p class="text-sm text-gray-500 mb-5">Основная статистика:</p>
+        <!-- ── ЛЕВАЯ КОЛОНКА ── -->
+        <div class="flex flex-col gap-5">
 
           <!-- Профиль -->
-          <div class="flex items-center gap-4 mb-8">
+          <div class="card p-5 flex items-center gap-4">
             <img id="stat-avatar" src="" alt="avatar"
-                 class="w-16 h-16 rounded-full border border-gray-300 object-cover bg-white" />
+                 class="w-16 h-16 rounded-full border-2 border-gray-100 object-cover bg-gray-100 shadow-sm flex-shrink-0" />
             <div>
-              <p id="stat-username" class="text-xl font-bold text-gray-900"></p>
+              <p id="stat-username" class="text-xl font-bold text-gray-900 leading-tight"></p>
               <p id="stat-country"  class="text-xs text-gray-400 mt-0.5"></p>
-              <p id="stat-xp"       class="text-xs text-gray-400"></p>
+              <p id="stat-xp"       class="text-xs text-gray-400 mt-0.5"></p>
             </div>
           </div>
 
           <!-- Tetra League -->
-          <div class="mb-9">
-            <div class="flex items-center gap-4 mb-3">
+          <div class="card p-5 stat-section">
+            <p class="text-[10px] font-semibold text-[#5b7db1] uppercase tracking-widest mb-3">Tetra League</p>
+            <div class="flex items-center gap-3 mb-3">
               <div id="tl-rank-badge"
-                   class="w-14 h-14 rounded-full flex items-center justify-center text-[20px] font-black text-white shrink-0 bg-gray-300">?</div>
-              <span class="text-[26px] font-bold text-gray-900">Tetra League</span>
+                   class="w-11 h-11 rounded-full flex items-center justify-center text-[17px] font-black text-white flex-shrink-0 bg-gray-300">
+                ?
+              </div>
+              <div>
+                <p id="tl-tr"   class="text-[28px] font-bold text-gray-900 leading-none"></p>
+                <p id="tl-meta" class="text-[11px] text-gray-400 mt-0.5"></p>
+              </div>
             </div>
-            <p id="tl-tr"   class="text-[34px] font-bold text-gray-900 leading-none mb-1">— TR</p>
-            <p id="tl-meta" class="text-[13px] text-gray-400 mb-3"></p>
-            <div id="tl-sub" class="flex flex-wrap gap-6 mt-2"></div>
+            <div id="tl-sub" class="flex flex-wrap gap-4 pt-2 border-t border-gray-100"></div>
           </div>
 
-          <!-- 40L Sprint -->
-          <div class="mb-9">
-            <div class="flex items-center gap-4 mb-3">
-              <div class="w-14 h-14 rounded-full flex items-center justify-center text-[13px] font-black text-white shrink-0 bg-[#3ecf6a]">40L</div>
-              <span class="text-[26px] font-bold text-gray-900">Sprint (40L)</span>
+          <!-- Sprint -->
+          <div class="card p-5 stat-section">
+            <p class="text-[10px] font-semibold text-[#3ecf6a] uppercase tracking-widest mb-3">40L Sprint</p>
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-11 h-11 rounded-full flex items-center justify-center text-[11px] font-black text-white flex-shrink-0 bg-[#3ecf6a]">40L</div>
+              <div>
+                <p id="sprint-time" class="text-[28px] font-bold text-gray-900 leading-none"></p>
+                <p id="sprint-rank" class="text-[11px] text-gray-400 mt-0.5"></p>
+              </div>
             </div>
-            <p id="sprint-time" class="text-[34px] font-bold text-gray-900 leading-none mb-1">—</p>
-            <p id="sprint-rank" class="text-[13px] text-gray-400 mb-3"></p>
-            <div id="sprint-sub" class="flex flex-wrap gap-6 mt-2"></div>
+            <div id="sprint-sub" class="flex flex-wrap gap-4 pt-2 border-t border-gray-100"></div>
           </div>
 
           <!-- Blitz -->
-          <div class="mb-9">
-            <div class="flex items-center gap-4 mb-3">
-              <div class="w-14 h-14 rounded-full flex items-center justify-center text-[13px] font-black text-white shrink-0 bg-[#e55039]">BLZ</div>
-              <span class="text-[26px] font-bold text-gray-900">Blitz</span>
+          <div class="card p-5 stat-section">
+            <p class="text-[10px] font-semibold text-[#e55039] uppercase tracking-widest mb-3">Blitz</p>
+            <div class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-full flex items-center justify-center text-[11px] font-black text-white flex-shrink-0 bg-[#e55039]">BLZ</div>
+              <div>
+                <p id="blitz-score" class="text-[28px] font-bold text-gray-900 leading-none"></p>
+                <p id="blitz-rank"  class="text-[11px] text-gray-400 mt-0.5"></p>
+              </div>
             </div>
-            <p id="blitz-score" class="text-[34px] font-bold text-gray-900 leading-none mb-1">—</p>
-            <p id="blitz-rank"  class="text-[13px] text-gray-400 mb-3"></p>
           </div>
 
-          <p id="cache-info" class="text-[11px] text-gray-300 mt-4"></p>
+          <p id="cache-info" class="text-[10px] text-gray-300"></p>
         </div>
 
-        <!-- Правая колонка: радар-чарты треугольником -->
-        <div>
-          <p class="text-base font-semibold text-gray-900 mb-3 text-center">Продвинутая статистика</p>
-
-          <!-- Верхний ряд: radar1 + radar2 -->
-          <div class="grid grid-cols-2 gap-3 mb-3">
-            <div class="bg-white border border-gray-300 rounded p-2">
-              <p class="text-[10px] text-gray-400 text-center mb-1">Tetra League</p>
-              <canvas id="radar1" height="180"></canvas>
-            </div>
-            <div class="bg-white border border-gray-300 rounded p-2">
-              <p class="text-[10px] text-gray-400 text-center mb-1">Стиль игры</p>
-              <canvas id="radar2" height="180"></canvas>
-            </div>
+        <!-- ── ПРАВАЯ КОЛОНКА ── -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="card p-3">
+            <p class="text-[9px] text-gray-400 uppercase tracking-widest text-center mb-2">Tetra League</p>
+            <canvas id="radar1" height="180"></canvas>
           </div>
-
-          <!-- Нижний ряд: radar3 по центру, половина ширины -->
-          <div class="flex justify-center">
-            <div class="bg-white border border-gray-300 rounded p-2 w-1/2">
-              <p class="text-[10px] text-gray-400 text-center mb-1">Sprint</p>
-              <canvas id="radar3" height="180"></canvas>
-            </div>
+          <div class="card p-3">
+            <p class="text-[9px] text-gray-400 uppercase tracking-widest text-center mb-2">Стиль игры</p>
+            <canvas id="radar2" height="180"></canvas>
           </div>
         </div>
 
       </div>
-    </div>  
+    </div>
   </main>
 
-  <script src="main.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

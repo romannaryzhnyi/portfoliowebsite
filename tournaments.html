@@ -5,38 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>КиберРезультаты — Турниры</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body class="bg-[#d9d9d9] text-gray-900 font-sans text-[15px]">
 
-  <!-- НАВИГАЦИЯ -->
-  <nav class="bg-[#5b7db1] flex items-stretch h-[52px] sticky top-0 z-50">
+  <nav class="bg-[#5b7db1] flex items-stretch h-[52px] sticky top-0 z-50 shadow-md">
     <a href="index.html"       class="nav-link">Главная</a>
     <a href="tournaments.html" class="nav-link active">Турниры</a>
     <a href="stats.html"       class="nav-link">Статистика</a>
   </nav>
 
-  <main class="px-20 py-10">
+  <main class="px-4 sm:px-8 md:px-20 py-6 md:py-10">
 
-    <!-- ── ПАНЕЛЬ ФИЛЬТРОВ ── -->
-    <div class="bg-white border border-gray-300 rounded p-5 mb-8 flex flex-wrap items-end gap-8">
+    <!-- Панель фильтров -->
+    <div class="card p-5 mb-6 md:mb-8 flex flex-col sm:flex-row sm:flex-wrap sm:items-end gap-5 sm:gap-8 fade-in-up">
 
-      <!-- Слайдер года -->
       <div class="flex flex-col gap-2 min-w-[260px]">
         <div class="flex items-center justify-between">
-          <span class="text-sm text-gray-700 font-medium">Год:</span>
-          <span id="year-value" class="text-sm font-semibold text-[#5b7db1]">2024 — 2026</span>
+          <span class="text-xs font-semibold text-[#5b7db1] uppercase tracking-widest">Год</span>
+          <span id="year-value" class="text-sm font-semibold text-gray-700">2024 — 2026</span>
         </div>
         <div class="relative h-6 flex items-center">
-          <!-- track -->
-          <div class="absolute w-full h-[3px] bg-gray-300 rounded"></div>
-          <!-- highlight между ручками -->
+          <div class="absolute w-full h-[3px] bg-gray-200 rounded"></div>
           <div id="range-track" class="absolute h-[3px] bg-[#5b7db1] rounded pointer-events-none"></div>
-          <!-- левая ручка -->
           <input id="year-from" type="range" min="2024" max="2026" step="1" value="2024"
+                 style="z-index:2;"
                  class="range-thumb absolute w-full appearance-none bg-transparent pointer-events-none" />
-          <!-- правая ручка -->
-          <input id="year-to"   type="range" min="2024" max="2026" step="1" value="2026"
+          <input id="year-to" type="range" min="2024" max="2026" step="1" value="2026"
+                 style="z-index:1;"
                  class="range-thumb absolute w-full appearance-none bg-transparent pointer-events-none" />
         </div>
         <div class="flex justify-between text-[11px] text-gray-400">
@@ -44,295 +40,191 @@
         </div>
       </div>
 
-      <!-- Фильтр по типу -->
       <div class="flex flex-col gap-2">
-        <span class="text-sm text-gray-700 font-medium">Тип соревнований:</span>
+        <span class="text-xs font-semibold text-[#5b7db1] uppercase tracking-widest">Тип соревнований</span>
         <div class="flex flex-wrap gap-2">
-          <button class="filter-type-btn active-filter text-xs px-3 py-1.5 rounded border transition-colors" data-type="all">
-            Все
-          </button>
-          <button class="filter-type-btn text-xs px-3 py-1.5 rounded border transition-colors" data-type="regional">
-            Региональные
-          </button>
-          <button class="filter-type-btn text-xs px-3 py-1.5 rounded border transition-colors" data-type="national">
-            Всероссийские
-          </button>
-          <button class="filter-type-btn text-xs px-3 py-1.5 rounded border transition-colors" data-type="international">
-            Международные
-          </button>
+          <button class="filter-type-btn active-filter text-xs px-3 py-1.5 rounded-md border" data-type="all">Все</button>
+          <button class="filter-type-btn text-xs px-3 py-1.5 rounded-md border" data-type="regional">Региональные</button>
+          <button class="filter-type-btn text-xs px-3 py-1.5 rounded-md border" data-type="national">Всероссийские</button>
+          <button class="filter-type-btn text-xs px-3 py-1.5 rounded-md border" data-type="international">Международные</button>
         </div>
       </div>
 
-      <!-- Счётчик результатов -->
-      <div class="ml-auto self-center">
+      <div class="sm:ml-auto sm:self-center">
         <span id="filter-count" class="text-sm text-gray-400"></span>
       </div>
     </div>
 
-    <!-- ── СПИСОК ТУРНИРОВ ── -->
-    <div id="tournament-list">
+    <!-- Список турниров -->
+    <div id="tournament-list" class="flex flex-col gap-6">
 
-      <!-- Турнир 1 -->
-      <div class="tournament-entry mb-10" data-year="2025" data-type="international">
-        <p class="text-[17px] font-semibold text-center text-gray-900 mb-4">Турнир 1</p>
-        <div class="grid grid-cols-[1fr_200px_200px] gap-6 items-start pl-4 border-l-[3px] border-gray-400">
-          <div>
-            <p class="text-sm text-gray-900 mb-1">Описание турнира:</p>
-            <p class="text-[13px] text-gray-600 leading-relaxed">
-              Название турнира. Город/Формат проведения.<br>
-              Место: — . Участников: —. Формат: —.
-            </p>
-            <p class="text-sm text-gray-900 mt-3 mb-1">Ссылки на организаторов/страницу турнира:</p>
-            <a href="https://ctwc.gg" class="text-[13px] text-[#5b7db1] hover:underline">filler</a>
+      <div class="tournament-entry fade-in-up" style="animation-delay:0.05s" data-year="2024" data-type="regional">
+        <div class="card p-8">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+            <p class="text-lg font-semibold text-gray-900">European TETR.IO Monthly #5</p>
+            <span class="text-[11px] font-medium text-[#5b7db1] bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">Региональный · 2024</span>
           </div>
-          <div class="media-box"><span class="text-[15px] text-gray-500">фото</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
-          <div class="media-box"><span class="text-[15px] text-gray-500">видео</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
-        </div>
-        <div class="w-full h-px bg-gray-300 mt-8"></div>
-      </div>
-
-      <!-- Турнир 2 -->
-      <div class="tournament-entry mb-10" data-year="2025" data-type="national">
-        <p class="text-[17px] font-semibold text-center text-gray-900 mb-4">Турнир 2</p>
-        <div class="grid grid-cols-[1fr_200px_200px] gap-6 items-start pl-4 border-l-[3px] border-gray-400">
-          <div>
-            <p class="text-sm text-gray-900 mb-1">Описание турнира:</p>
-            <p class="text-[13px] text-gray-600 leading-relaxed">
-              Название турнира. Город/Формат проведения.<br>
-              Место: — . Участников: —. Формат: —.
-            </p>
-            <p class="text-sm text-gray-900 mt-3 mb-1">Ссылки на организаторов/страницу турнира:</p>
-            <a href="#" class="text-[13px] text-[#5b7db1] hover:underline">filler</a>
-          </div>
-          <div class="media-box"><span class="text-[15px] text-gray-500">фото</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
-          <div class="media-box"><span class="text-[15px] text-gray-500">видео</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
-        </div>
-        <div class="w-full h-px bg-gray-300 mt-8"></div>
-      </div>
-
-      <!-- Турнир 3 -->
-      <div class="tournament-entry mb-10" data-year="2025" data-type="international">
-        <p class="text-[17px] font-semibold text-center text-gray-900 mb-4">Турнир 3</p>
-        <div class="grid grid-cols-[1fr_200px_200px] gap-6 items-start pl-4 border-l-[3px] border-gray-400">
-          <div>
-            <p class="text-sm text-gray-900 mb-1">Описание турнира:</p>
-            <p class="text-[13px] text-gray-600 leading-relaxed">
-              Название турнира. Город/Формат проведения.<br>
-              Место: — . Участников: —. Формат: —.
-            </p>
-            <p class="text-sm text-gray-900 mt-3 mb-1">Ссылки на организаторов/страницу турнира:</p>
-            <a href="#" class="text-[13px] text-[#5b7db1] hover:underline">filler</a>
-          </div>
-          <div class="media-box"><span class="text-[15px] text-gray-500">фото</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
-          <div class="media-box"><span class="text-[15px] text-gray-500">видео</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
-        </div>
-        <div class="w-full h-px bg-gray-300 mt-8"></div>
-      </div>
-
-      <!-- Турнир 4 -->
-      <div class="tournament-entry mb-10" data-year="2024" data-type="regional">
-        <p class="text-[17px] font-semibold text-center text-gray-900 mb-4">Турнир 4</p>
-        <div class="grid grid-cols-[1fr_200px_200px] gap-6 items-start pl-4 border-l-[3px] border-gray-400">
-          <div>
-            <p class="text-sm text-gray-900 mb-1">Описание турнира:</p>
-            <p class="text-[13px] text-gray-600 leading-relaxed">
-              Название турнира. Город/Формат проведения.<br>
-              Место: — . Участников: —. Формат: —.
-            </p>
-            <p class="text-sm text-gray-900 mt-3 mb-1">Ссылки на организаторов/страницу турнира:</p>
-            <span class="text-[13px] text-gray-400 italic">ссылка при наличии</span>
-          </div>
-          <div class="media-box"><span class="text-[15px] text-gray-500">фото</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
-          <div class="media-box"><span class="text-[15px] text-gray-500">видео</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
-        </div>
-        <div class="w-full h-px bg-gray-300 mt-8"></div>
-      </div>
-
-      <!-- Турнир 5 -->
-      <div class="tournament-entry mb-10" data-year="2024" data-type="regional">
-        <p class="text-[17px] font-semibold text-center text-gray-900 mb-4">Турнир 5</p>
-        <div class="grid grid-cols-[1fr_200px_200px] gap-6 items-start pl-4 border-l-[3px] border-gray-400">
-          <div>
-            <p class="text-sm text-gray-900 mb-1">Описание турнира:</p>
-            <p class="text-[13px] text-gray-600 leading-relaxed">
-              Название турнира. Город/Формат проведения.<br>
-              Место: — . Участников: —. Формат: —.
-            </p>
-            <p class="text-sm text-gray-900 mt-3 mb-1">Ссылки на организаторов/страницу турнира:</p>
-            <span class="text-[13px] text-gray-400 italic">ссылка при наличии</span>
-          </div>
-          <div class="media-box"><span class="text-[15px] text-gray-500">фото</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
-          <div class="media-box"><span class="text-[15px] text-gray-500">видео</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
-        </div>
-        <div class="w-full h-px bg-gray-300 mt-8"></div>
-      </div>
-
-      <!-- Турнир 6 -->
-      <div class="tournament-entry mb-10" data-year="2024" data-type="national">
-        <p class="text-[17px] font-semibold text-center text-gray-900 mb-4">Турнир 6</p>
-        <div class="grid grid-cols-[1fr_200px_200px] gap-6 items-start pl-4 border-l-[3px] border-gray-400">
-          <div>
-            <p class="text-sm text-gray-900 mb-1">Описание турнира:</p>
-            <p class="text-[13px] text-gray-600 leading-relaxed">
-              Название турнира. Город/Формат проведения.<br>
-              Место: — . Участников: —. Формат: —.
-            </p>
-            <p class="text-sm text-gray-900 mt-3 mb-1">Ссылки на организаторов/страницу турнира:</p>
-            <span class="text-[13px] text-gray-400 italic">ссылка при наличии</span>
-          </div>
-          <div class="media-box"><span class="text-[15px] text-gray-500">фото</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
-          <div class="media-box"><span class="text-[15px] text-gray-500">видео</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
-        </div>
-        <div class="w-full h-px bg-gray-300 mt-8"></div>
-      </div>
-
-      <!-- Турнир 7 -->
-      <div class="tournament-entry mb-10" data-year="2026" data-type="international">
-        <p class="text-[17px] font-semibold text-center text-gray-900 mb-4">Турнир 7</p>
-        <div class="grid grid-cols-[1fr_200px_200px] gap-6 items-start pl-4 border-l-[3px] border-gray-400">
-          <div>
-            <p class="text-sm text-gray-900 mb-1">Описание турнира:</p>
-            <p class="text-[13px] text-gray-600 leading-relaxed">
-              Название турнира. Город/Формат проведения.<br>
-              Место: — . Участников: —. Формат: —.
-            </p>
-            <p class="text-sm text-gray-900 mt-3 mb-1">Ссылки на организаторов/страницу турнира:</p>
-            <span class="text-[13px] text-gray-400 italic">ссылка при наличии</span>
-          </div>
-          <div class="media-box"><span class="text-[15px] text-gray-500">фото</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
-          <div class="media-box"><span class="text-[15px] text-gray-500">видео</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
-        </div>
-        <div class="w-full h-px bg-gray-300 mt-8"></div>
-      </div>
-
-      <!-- Турнир 8 -->
-      <div class="tournament-entry mb-10" data-year="2026" data-type="regional">
-        <p class="text-[17px] font-semibold text-center text-gray-900 mb-4">Турнир 8</p>
-        <div class="grid grid-cols-[1fr_200px_200px] gap-6 items-start pl-4 border-l-[3px] border-gray-400">
-          <div>
-            <p class="text-sm text-gray-900 mb-1">Описание турнира:</p>
-            <p class="text-[13px] text-gray-600 leading-relaxed">
-              Название турнира. Город/Формат проведения.<br>
-              Место: — . Участников: —. Формат: —.
-            </p>
-            <p class="text-sm text-gray-900 mt-3 mb-1">Ссылки на организаторов/страницу турнира:</p>
-            <span class="text-[13px] text-gray-400 italic">ссылка при наличии</span>
-          </div>
-          <div class="media-box"><span class="text-[15px] text-gray-500">фото</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
-          <div class="media-box"><span class="text-[15px] text-gray-500">видео</span><span class="text-[11px] text-gray-400 uppercase tracking-wide">при наличии</span></div>
+          <div class="tournament-card-inner grid grid-cols-1 sm:grid-cols-[1fr_140px_340px] gap-6 items-stretch pl-4 border-l-[3px] border-[#5b7db1]">
+              <div>
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Описание</p>
+              <p class="text-sm text-gray-700 leading-relaxed">Первый турнирный опыт. <br>Серия общеевропейских соревнований "EUcannon" стала для меня постоянным полем битвы на многие месяца вперед.<br>Место: 17-ое<br>Дата: 12.05.2024</p>
+              <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mt-3 mb-1">Ссылки</p>
+              <a href="https://eucannon.org/landing/5" class="text-[13px] text-[#5b7db1] hover:underline">Информация о турнире<br></a>
+              <a href="https://eucannon.org/bracket/5" class="text-[13px] text-[#5b7db1] hover:underline">Турнирная сетка</a>
+              </div>
+              <img class="media-thumb-photo" src="https://drive.google.com/thumbnail?id=1MKhlPlGBpD5_ojJZgfjjZIiVjtUPZtuR&sz=s800" alt="Бокс-арт тетрио" />
+              <iframe class="media-thumb-video" src="https://drive.google.com/file/d/1t6NtCXUD7VS_1NVhETWMVVcaeeBuDYlO/preview" controls></iframe>
+            </div>
         </div>
       </div>
 
-    </div><!-- /tournament-list -->
+      <div class="tournament-entry fade-in-up" style="animation-delay:0.10s" data-year="2024" data-type="international">
+        <div class="card p-8">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+            <p class="text-lg font-semibold text-gray-900">Radiant 100</p>
+            <span class="text-[11px] font-medium text-[#5b7db1] bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">Международный · 2024</span>
+          </div>
+          <div class="tournament-card-inner grid grid-cols-1 sm:grid-cols-[1fr_140px_340px] gap-6 items-stretch pl-4 border-l-[3px] border-[#5b7db1]">
+              <div>
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Описание</p>
+              <p class="text-sm text-gray-700 leading-relaxed">Мой первый международный турнир.<br>Встретился с действующим чемпионом мира "ICLY" в верхней сетке.<br>Место: 49-ое<br>Дата: 19.07.2024</p>
+              <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mt-3 mb-1">Ссылки</p>
+              <a href="https://challonge.com/Radiant100" class="text-[13px] text-[#5b7db1] hover:underline">Информация о турнире<br></a>
+              <a href="https://challonge.com/Radiant100/standings" class="text-[13px] text-[#5b7db1] hover:underline">Результаты</a>
+              </div>
+              <img class="media-thumb-photo" src="https://drive.google.com/thumbnail?id=1MKhlPlGBpD5_ojJZgfjjZIiVjtUPZtuR&sz=s800" alt="Бокс-арт тетрио" />
+              <iframe class="media-thumb-video" src="https://drive.google.com/file/d/1WIGMAMuRXcZroXQG6S7yDDs5kgqw_pn_/preview" controls></iframe>
+            </div>
+        </div>
+      </div>
 
-    <!-- Пусто после фильтрации -->
-    <div id="no-results" class="hidden text-center text-gray-400 text-sm py-16 border border-dashed border-gray-300 rounded">
+      <div class="tournament-entry fade-in-up" style="animation-delay:0.15s" data-year="2024" data-type="national">
+        <div class="card p-8">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+            <p class="text-lg font-semibold text-gray-900">ТЕТРИС - 1х1 - ПОРТ для всех ФО #8</p>
+            <span class="text-[11px] font-medium text-[#5b7db1] bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">Всероссийский · 2024</span>
+          </div>
+          <div class="tournament-card-inner grid grid-cols-1 sm:grid-cols-[1fr_140px_340px] gap-6 items-stretch pl-4 border-l-[3px] border-[#5b7db1]">
+              <div>
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Описание</p>
+              <p class="text-sm text-gray-700 leading-relaxed">Первая победа на всероссийском уровне.<br>В гранд-финале обыграл полуфиналиста Чемпионата России по Киберспорту - "Kanehide".<br>Место: 1-ое<br>Дата: 06.12.2024</p>
+              <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mt-3 mb-1">Ссылки</p>
+              <a href="https://pvp.vkplay.ru/tournament/34934/" class="text-[13px] text-[#5b7db1] hover:underline">Информация о турнире<br></a>
+              <a href="https://pvp.vkplay.ru/tournament/34934/bracket" class="text-[13px] text-[#5b7db1] hover:underline">Результаты</a>
+              </div>
+              <img class="media-thumb-photo" src="images/fks.png" alt="Лого ФКС" />
+              <iframe class="media-thumb-video" src="https://drive.google.com/file/d/1N9C-Fh72QZNtPwxACzu7N5zAcQEjcoev/preview" controls></iframe>
+            </div>
+        </div>
+      </div>
+
+      <div class="tournament-entry fade-in-up" style="animation-delay:0.20s" data-year="2025" data-type="national">
+        <div class="card p-8">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+            <p class="text-lg font-semibold text-gray-900">U Cap #1</p>
+            <span class="text-[11px] font-medium text-[#5b7db1] bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">Всероссийский · 2025</span>
+          </div>
+          <div class="tournament-card-inner grid grid-cols-1 sm:grid-cols-[1fr_140px_340px] gap-6 items-stretch pl-4 border-l-[3px] border-[#5b7db1]">
+              <div>
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Описание</p>
+              <p class="text-sm text-gray-700 leading-relaxed">Начало проведения турниров от организации TetraTeamEvents, с которой я в последствии работал как комментатор и организатор.<br>Обыграл дефицит 3-6 в матче до 7 очков против одного из самых сильных игроков всего СНГ.<br>Место: 3-е<br>Дата: 11.01.2025</p>
+              <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mt-3 mb-1">Ссылки</p>
+              <a href="https://challonge.com/tteU1" class="text-[13px] text-[#5b7db1] hover:underline">Информация о турнире<br></a>
+              <a href="https://challonge.com/tteU1/standings" class="text-[13px] text-[#5b7db1] hover:underline">Результаты</a>
+              </div>
+              <img class="media-thumb-photo" src="https://drive.google.com/thumbnail?id=1MKhlPlGBpD5_ojJZgfjjZIiVjtUPZtuR&sz=s800" alt="Бокс-арт тетрио" />
+              <iframe class="media-thumb-video" src="https://drive.google.com/file/d/15Jng1RQNxZoi_M-oL9CDPdXKyygwo8TO/preview" controls></iframe>
+            </div>
+        </div>
+      </div>
+
+      <div class="tournament-entry fade-in-up" style="animation-delay:0.25s" data-year="2025" data-type="regional">
+        <div class="card p-8">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+            <p class="text-lg font-semibold text-gray-900">Open Cup #1</p>
+            <span class="text-[11px] font-medium text-[#5b7db1] bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">Региональный · 2025</span>
+          </div>
+          <div class="tournament-card-inner grid grid-cols-1 sm:grid-cols-[1fr_140px_340px] gap-6 items-stretch pl-4 border-l-[3px] border-[#5b7db1]">
+              <div>
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Описание</p>
+              <p class="text-sm text-gray-700 leading-relaxed">Первое крупное мероприятие от TetraTeamEvents с поддержкой от разработичков TETR.IO.<br>Будучи аутсайдером в обоих матчах, подряд победил двух сильнейших игроков из Украины.<br>Место: 3-е<br>Дата: 20.04.2025</p>
+              <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mt-3 mb-1">Ссылки</p>
+              <a href="https://challonge.com/TTEOpen1" class="text-[13px] text-[#5b7db1] hover:underline">Информация о турнире<br></a>
+              <a href="https://challonge.com/TTEOpen1/standings" class="text-[13px] text-[#5b7db1] hover:underline">Результаты</a>
+              </div>  
+              <img class="media-thumb-photo" src="https://drive.google.com/thumbnail?id=1MKhlPlGBpD5_ojJZgfjjZIiVjtUPZtuR&sz=s800" alt="Бокс-арт тетрио" />
+              <iframe class="media-thumb-video"  src="https://drive.google.com/file/d/1vYyKfzfdfcGh8lcsjhPiwSLm_8zHAWVT/preview" controls></iframe>
+            </div>
+        </div>
+      </div>
+
+      <div class="tournament-entry fade-in-up" style="animation-delay:0.30s" data-year="2025" data-type="international">
+        <div class="card p-8">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+            <p class="text-lg font-semibold text-gray-900">Lightning Arena 2</p>
+            <span class="text-[11px] font-medium text-[#5b7db1] bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">Международный · 2025</span>
+          </div>
+          <div class="tournament-card-inner grid grid-cols-1 sm:grid-cols-[1fr_140px_340px] gap-6 items-stretch pl-4 border-l-[3px] border-[#5b7db1]">
+              <div>
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Описание</p>
+              <p class="text-sm text-gray-700 leading-relaxed">Прорыв на международном уровне среди более 250 участинков.<br>Выиграл несколько матчей против игроков гораздо превосходящих меня по уровню мастерства.<br>Место: 19-е<br>Дата: 30.10.2025</p>
+              <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mt-3 mb-1">Ссылки</p>
+              <a href="https://lightningarena.com/lightning-arena-2" class="text-[13px] text-[#5b7db1] hover:underline">Информация о турнире</a>
+              </div>  
+              <img class="media-thumb-photo" src="https://drive.google.com/thumbnail?id=1MKhlPlGBpD5_ojJZgfjjZIiVjtUPZtuR&sz=s800" alt="Бокс-арт тетрио" />
+              <iframe class="media-thumb-video" src="https://drive.google.com/file/d/1PNykSPocMfciZ99c-nopM0q-N99wBvYw/preview" controls></iframe>
+            </div>
+        </div>
+      </div>
+
+      <div class="tournament-entry fade-in-up" style="animation-delay:0.35s" data-year="2026" data-type="regional">
+        <div class="card p-8">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+            <p class="text-lg font-semibold text-gray-900">Чемпионат Санкт-Петербурга</p>
+            <span class="text-[11px] font-medium text-[#5b7db1] bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">Региональный · 2026</span>
+          </div>
+          <div class="tournament-card-inner grid grid-cols-1 sm:grid-cols-[1fr_140px_340px] gap-6 items-stretch pl-4 border-l-[3px] border-[#5b7db1]">
+              <div>
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Описание</p>
+              <p class="text-sm text-gray-700 leading-relaxed">Общегородские соревнования имели на кону спортивный разряд и квалификацию на Чемпионат России по Киберспорту.<br>Завершил турнир без единого поражения со счётом 21-0.<br>Место: 1-ое<br>Дата: 15.03.2026</p>
+              <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mt-3 mb-1">Ссылки</p> 
+              <a href="https://vk.ru/wall-154751177_5983" class="text-[13px] text-[#5b7db1] hover:underline">Информация о турнире<br></a>
+              <a href="https://vk.com/wall-141935921_5294" class="text-[13px] text-[#5b7db1] hover:underline">Новостной пост от Чёрных Медведей</a>
+              </div>  
+              <img class="media-thumb-photo" src="images/fks.png"  alt="Лого ФКС" />
+              <img class="media-thumb-video" src="images/spb.jpg" alt="Фото турнира"></img>
+            </div>
+        </div>
+      </div>
+
+      <div class="tournament-entry fade-in-up" style="animation-delay:0.40s" data-year="2026" data-type="regional">
+        <div class="card p-8">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+            <p class="text-lg font-semibold text-gray-900">European TETR.IO Monthly #29</p>
+            <span class="text-[11px] font-medium text-[#5b7db1] bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">Региональный · 2026</span>
+          </div>
+          <div class="tournament-card-inner grid grid-cols-1 sm:grid-cols-[1fr_140px_340px] gap-6 items-stretch pl-4 border-l-[3px] border-[#5b7db1]">
+              <div>
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Описание</p>
+              <p class="text-sm text-gray-700 leading-relaxed">Европейские соревновния заимели новый, улучшенный формат<br>Сыграл невероятно напряженный матч против одного из своих давних соперников с которым мы вместе начинали играть.<br>Место: 11-ое<br>Дата: 15.03.2026</p>
+              <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mt-3 mb-1">Ссылки</p> 
+              <a href="https://eucannon.org/landing/38" class="text-[13px] text-[#5b7db1] hover:underline">Информация о турнире<br></a>
+              <a href="https://eucannon.org/bracket/38" class="text-[13px] text-[#5b7db1] hover:underline">Турнирая сетка</a>
+              </div>  
+              <img class="media-thumb-photo" src="https://drive.google.com/thumbnail?id=1MKhlPlGBpD5_ojJZgfjjZIiVjtUPZtuR&sz=s800" alt="Бокс-арт тетрио" />
+              <iframe class="media-thumb-video" src="https://drive.google.com/file/d/1Q01KI3AFWKFzb3CJBLJVQQ1y1URO8iJ4/preview" controls></iframe>
+            </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="no-results" class="hidden text-center text-gray-400 text-sm py-16 border border-dashed border-gray-300 rounded-lg mt-6">
       Нет турниров, соответствующих выбранным фильтрам.
     </div>
 
   </main>
 
-  <style>
-    /* Ручки слайдера */
-    .range-thumb::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 16px; height: 16px;
-      border-radius: 50%;
-      background: #5b7db1;
-      border: 2px solid #fff;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-      pointer-events: all;
-      cursor: pointer;
-    }
-    .range-thumb::-moz-range-thumb {
-      width: 16px; height: 16px;
-      border-radius: 50%;
-      background: #5b7db1;
-      border: 2px solid #fff;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-      pointer-events: all;
-      cursor: pointer;
-    }
-    /* Активная кнопка типа */
-    .filter-type-btn { background: #fff; color: #4b5563; border-color: #d1d5db; }
-    .filter-type-btn.active-filter { background: #5b7db1; color: #fff; border-color: #5b7db1; }
-  </style>
-
-  <script>
-    const MIN_YEAR = 2024, MAX_YEAR = 2026;
-    const fromSlider = document.getElementById('year-from');
-    const toSlider   = document.getElementById('year-to');
-    const yearValue  = document.getElementById('year-value');
-    const rangeTrack = document.getElementById('range-track');
-
-    let activeType = 'all';
-
-    /* Обновить подсветку трека между ручками */
-    function updateTrack() {
-      const from = parseInt(fromSlider.value);
-      const to   = parseInt(toSlider.value);
-      const total = MAX_YEAR - MIN_YEAR;
-      const leftPct  = ((from - MIN_YEAR) / total) * 100;
-      const rightPct = ((to   - MIN_YEAR) / total) * 100;
-      rangeTrack.style.left  = leftPct  + '%';
-      rangeTrack.style.width = (rightPct - leftPct) + '%';
-      yearValue.textContent  = from === to ? `${from}` : `${from} — ${to}`;
-    }
-
-    /* Не позволять ручкам перескакивать друг через друга */
-    fromSlider.addEventListener('input', () => {
-      if (parseInt(fromSlider.value) > parseInt(toSlider.value))
-        fromSlider.value = toSlider.value;
-      updateTrack();
-      applyFilters();
-    });
-    toSlider.addEventListener('input', () => {
-      if (parseInt(toSlider.value) < parseInt(fromSlider.value))
-        toSlider.value = fromSlider.value;
-      updateTrack();
-      applyFilters();
-    });
-
-    /* Кнопки типа */
-    document.querySelectorAll('.filter-type-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-type-btn').forEach(b => b.classList.remove('active-filter'));
-        btn.classList.add('active-filter');
-        activeType = btn.dataset.type;
-        applyFilters();
-      });
-    });
-
-    /* Применить фильтры */
-    function applyFilters() {
-      const from = parseInt(fromSlider.value);
-      const to   = parseInt(toSlider.value);
-      const entries = document.querySelectorAll('.tournament-entry');
-      let visible = 0;
-
-      entries.forEach(entry => { 
-        const yearOk = year >= from && year <= to;
-        const typeOk = activeType === 'all' || type === activeType;
-
-        if (yearOk && typeOk) {
-          entry.style.display = '';
-          visible++;
-        } else {
-          entry.style.display = 'none';
-        }
-      });
-
-      document.getElementById('filter-count').textContent =
-        `Показано: ${visible} из ${entries.length}`;
-      document.getElementById('no-results').classList.toggle('hidden', visible > 0);
-    }
-
-    /* Инициализация */
-    updateTrack();
-    applyFilters();
-  </script>
-
-  <script src="main.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
